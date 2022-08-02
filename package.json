@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "esbuild --servedir=. --bundle src/index.js --outdir=dist --loader:.js=jsx"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.51"
+  },
+  "dependencies": {
+    "milligram": "^1.4.1",
+    "qrcode": "^1.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

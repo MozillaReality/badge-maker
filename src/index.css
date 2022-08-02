@@ -1,0 +1,57 @@
+@import "milligram";
+
+body, .form{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+#root {
+	display: grid;
+	grid-template: 1fr / 1fr 1fr;
+  grid-gap: 1em;
+}
+label,
+input {
+	align-self: start;
+}
+input[type="color"] {
+	width: 50px;
+	padding: 4px;
+}
+canvas {
+	display: block;
+	max-width: 100vw;
+	width: 512px;
+}
+.colors {
+	display: grid;
+	grid-template: 1fr 1fr / 1fr 1fr;
+	width: min-content;
+	margin-bottom: 1em;
+}
+.color {
+	margin: 5px 10px;
+	display: flex;
+	width: 130px;
+	justify-content: space-between;
+	align-items: center;
+}
+.color input {
+	margin: 0;
+}
+.save {
+	font-size: 25px;
+	margin-bottom: 1em;
+	color: black;
+	border: 1px solid lightgrey;
+	border-radius: 6px;
+	padding: 4px 12px;
+	background: #0066aa;
+	color: white;
+}
+.save:hover {
+	color: white;
+}
+.save.disabled {
+	background: grey;
+}
