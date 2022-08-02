@@ -69,7 +69,7 @@ const Preview = forwardRef(function Preview({ texture }, ref) {
     canvasTexture.anisotropy = maxAnisotropy;
     map.current = canvasTexture;
 
-    new GLTFLoader().load("nametag.glb", (gltf) => {
+    new GLTFLoader().load("nametag-2.glb", (gltf) => {
       gltf.scene.traverse((object) => {
         if (object.material?.map && !object.name.includes("webcam_frame")) {
           object.material.map = canvasTexture;
