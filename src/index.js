@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import QRCode from "qrcode";
 import "./index.css";
+import { TextInput, ImageInput, ColorInput, Preview } from "./components";
 
 const RES = 1024;
 
 function App() {
-  const [state, setState] = React.useState({
-    nameOne: "JOHN SMITH",
+  const [state, setState] = useState({
+    nameOne: "JANE SMITH",
     nameTwo: "SMITHERSON",
     company: "FOOCORP",
     role: "3D ARTIST",
@@ -18,18 +19,19 @@ function App() {
     highlight: "#4444aa",
   });
 
-  const [saveUrl, setSaveUrl] = React.useState();
+  const [saveUrl, setSaveUrl] = useState();
 
-  const canvas = React.useRef();
-  const ctx = React.useRef();
+  const canvas = useRef();
+  const ctx = useRef();
+  const preview = useRef();
 
-  React.useEffect(() => {
+  useEffect(() => {
     canvas.current.width = RES;
     canvas.current.height = RES;
     ctx.current = canvas.current.getContext("2d");
   }, [canvas]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (state.url) {
       const img = new Image();
       img.onload = () => {
@@ -45,7 +47,7 @@ function App() {
     }
   }, [state.url]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const ct = ctx.current;
 
     ct.fillStyle = state.back;
@@ -114,15 +116,15 @@ function App() {
 
     ct.restore();
 
-    setSaveUrl(null);
-    const timeoutId = setTimeout(
-      () => setSaveUrl(canvas.current?.toDataURL()),
-      500
-    );
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
+    if (preview.current) {
+      preview.current.update();
+      setSaveUrl(null);
+      const timeoutId = setTimeout(
+        async () => setSaveUrl(await preview.current.toObjectURL()),
+        500
+      );
+      return () => clearTimeout(timeoutId);
+    }
   }, [ctx, state]);
 
   return (
@@ -206,55 +208,7 @@ function App() {
         </a>
       </div>
       <canvas ref={canvas}></canvas>
-    </>
-  );
-}
-
-function TextInput({ label, state, setState, stateKey }) {
-  return (
-    <>
-      <label>{label}</label>
-      <input
-        value={state[stateKey]}
-        onChange={(e) =>
-          setState((state) => ({ ...state, [stateKey]: e.target.value }))
-        }
-      />
-    </>
-  );
-}
-
-function ImageInput({ label, state, setState, stateKey }) {
-  return (
-    <>
-      <label>{label}</label>
-      <input
-        type="file"
-        onChange={async (e) => {
-          const imageBitmap = await createImageBitmap(e.target.files[0]);
-          setState((state) => ({
-            ...state,
-            [stateKey]: imageBitmap,
-          }));
-        }}
-      />
-    </>
-  );
-}
-
-function ColorInput({ label, state, setState, stateKey }) {
-  return (
-    <>
-      <label className="color">
-        {label}
-        <input
-          type="color"
-          value={state[stateKey]}
-          onChange={(e) =>
-            setState((state) => ({ ...state, [stateKey]: e.target.value }))
-          }
-        />
-      </label>
+      {useMemo(() => canvas.current && <Preview ref={preview} texture={canvas.current} />, [canvas.current])}
     </>
   );
 }
@@ -275,7 +229,7 @@ function drawImageFitted(ct, img, x, y, w, h) {
 function filename(state) {
   return `badge-${state.nameOne.replaceAll(" ", "-").toLowerCase()}${
     state.nameTwo ? `-${state.nameTwo.toLowerCase()}` : ""
-  }.png`;
+  }.glb`;
 }
 
 createRoot(root).render(<App />);

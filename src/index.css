@@ -4,10 +4,11 @@ body, .form{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+  grid-row: span 2;
 }
 #root {
 	display: grid;
-	grid-template: 1fr / 1fr 1fr;
+	grid-template: auto auto / auto auto;
   grid-gap: 1em;
 }
 label,
@@ -21,7 +22,11 @@ input[type="color"] {
 canvas {
 	display: block;
 	max-width: 100vw;
-	width: 512px;
+	width: 400px;
+	height: 400px;
+  justify-self: center;
+  align-self: center;
+  background: lightgrey;
 }
 .colors {
 	display: grid;
@@ -54,4 +59,11 @@ canvas {
 }
 .save.disabled {
 	background: grey;
+}
+
+@media (max-width: 600px) { 
+  #root {
+    display: flex;
+    flex-direction: column;
+  }
 }
