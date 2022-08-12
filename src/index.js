@@ -209,6 +209,10 @@ function App() {
       </div>
       <canvas ref={canvas}></canvas>
       {useMemo(() => canvas.current && <Preview ref={preview} texture={canvas.current} />, [canvas.current])}
+      <div className="notice">
+        The 3D models used in this app are ©2020-2022 by individual <a href="https://www.mozilla.org" target="_blank">mozilla.org</a> contributors.{" "}
+        Content available under a <a href="https://www.mozilla.org/en-US/foundation/licensing/website-content/" target="_blank">Creative Commons license</a>.
+      </div>
     </>
   );
 }

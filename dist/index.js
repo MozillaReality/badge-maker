@@ -49804,7 +49804,15 @@
     }), (0, import_react6.useMemo)(() => canvas.current && /* @__PURE__ */ import_react6.default.createElement(Preview, {
       ref: preview,
       texture: canvas.current
-    }), [canvas.current]));
+    }), [canvas.current]), /* @__PURE__ */ import_react6.default.createElement("div", {
+      className: "notice"
+    }, "The 3D models used in this app are \xA92020-2022 by individual ", /* @__PURE__ */ import_react6.default.createElement("a", {
+      href: "https://www.mozilla.org",
+      target: "_blank"
+    }, "mozilla.org"), " contributors.", " ", "Content available under a ", /* @__PURE__ */ import_react6.default.createElement("a", {
+      href: "https://www.mozilla.org/en-US/foundation/licensing/website-content/",
+      target: "_blank"
+    }, "Creative Commons license"), "."));
   }
   function drawImageFitted(ct, img, x, y, w, h) {
     const aspect2 = img.width / img.height;

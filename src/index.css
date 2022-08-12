@@ -61,6 +61,12 @@ canvas {
 	background: grey;
 }
 
+.notice {
+  grid-column: span 2;
+  font-size: 12px;
+  text-align: center;
+}
+
 @media (max-width: 600px) { 
   #root {
     display: flex;
